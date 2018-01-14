@@ -64,17 +64,17 @@ app.get('/users/id/:id',(req, res)=>{
    var mid= req.params.id;
     
     if(!ObjectID.isValid(mid)){
-        res.status(404).send();
+        res.status(404).send({Error: 'Invalid Id'});
     }
     
     User.findById(mid).then((user)=>{
        if(!user){
-           res.status(404).send();
+           res.status(404).send({Error: 'User Not Found'});
        }else{
            res.status(200).send(user);
        }
     }).catch((err)=>{
-       res.status(404).send(); 
+       res.status(400).send({err}); 
     });
     
 });

@@ -55,16 +55,72 @@ describe('POST /todos',()=>{
 
     
 });
+//
+//describe('GET /todos',()=>{
+//   it('should return all the todos',(done)=>{
+//       request(app).get('/todos').expect(200).expect((res)=>{
+//           expect(res.body.docs.length).toBe(dummy.length);
+//       }).end(done());
+//   });
+//});
 
-describe('GET /todos',()=>{
-   it('should return all the todos',(done)=>{
-       request(app).get('/todos').expect(200).expect((res)=>{
-           expect(res.body.docs.length).toBe(dummy.length);
-       }).end(done());
-   });
-    
+describe('GET /users/id/:id',()=>{
+   
+    it('should return an user based on query',(done)=>{
+        
+        request(app).get('/users/id/5a58c9203f7aef1834cac428').expect(200).end((err,res)=>{
+            if(err){
+                return done(err);
+            }
+            
+            console.log(res.body);
+            done();
+            
+        });
+    });
     
     
 });
+
+
+describe('GET /users/id/:validButNotAvailable',()=>{
+   
+    it('should not return an user based on query',(done)=>{
+        
+        request(app).get('/users/id/5a58c9203f7aef1834cac444').expect(404).end((err,res)=>{
+            if(err){
+                return done(err);
+            }
+            
+            console.log(res.body);
+            done();
+            
+        });
+    });
+    
+    
+});
+
+
+
+
+describe('GET /users/id/:InvalidId',()=>{
+   
+    it('should not return an user based on query because of invalid id',(done)=>{
+        
+        request(app).get('/users/id/true').expect(404).end((err,res)=>{
+            if(err){
+                return done(err);
+            }
+            
+            console.log(res.body);
+            done();
+            
+        });
+    });
+    
+    
+});
+
 
 
